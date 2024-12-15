@@ -1,6 +1,7 @@
 // Temp data
 
-export let role = "admin";
+// export let role = "admin";
+export const role ="admin";
 
 export const teachersData = [
     {
