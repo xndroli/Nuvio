@@ -123,6 +123,7 @@ model Assignment {
   title     String
   startDate DateTime
   dueDate   DateTime
+  lessonId  Int
   lesson    Lesson    @relation(fields: [lessonId], references: [id])
   results   Result[]
 }
