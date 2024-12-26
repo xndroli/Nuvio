@@ -9,7 +9,7 @@ import { Class, Prisma, Subject, Teacher } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
 
-type TeacherList = Teacher & {subjects: Subject[]} & {classes: Class[]};
+type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
 const columns = [
     {
@@ -97,6 +97,9 @@ const TeacherListPage = async ({ searchParams }: { searchParams: { [key: string]
                         break;
                     case "search":
                         query.name = {contains: value, mode: "insensitive"};
+                        break;
+                    default:
+                        break;
                 }
             }
         }

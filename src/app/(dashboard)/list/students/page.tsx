@@ -9,7 +9,7 @@ import { Class, Prisma, Student } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
 
-type StudentList = Student & {class: Class};
+type StudentList = Student & { class: Class };
 
 const columns = [
     {
@@ -96,6 +96,9 @@ const StudentListPage = async ({ searchParams }: { searchParams: { [key: string]
                         break;
                     case "search":
                         query.name = {contains: value, mode: "insensitive"};
+                        break;
+                    default:
+                        break;
                 }
             }
         }
