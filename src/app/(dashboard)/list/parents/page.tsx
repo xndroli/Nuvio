@@ -44,7 +44,7 @@ const renderRow = (item: ParentList) => (
                 <p className='text-xs text-gray-500'>{item?.email}</p>
             </div>
         </td>
-        <td className='hidden md:table-cell'>{item.students.map(student => student.name).join(', ')}</td>
+        <td className='hidden md:table-cell'>{item.students.map((student) => student.name).join(', ')}</td>
         <td className='hidden md:table-cell'>{item.phone}</td>
         <td className='hidden md:table-cell'>{item.address}</td>
         <td>
@@ -74,8 +74,6 @@ const ParentListPage = async ({ searchParams }: { searchParams: { [key: string]:
                 switch(key) {
                     case "search":
                         query.name = {contains: value, mode: "insensitive"};
-                        break;
-                    default:
                         break;
                 }
             }

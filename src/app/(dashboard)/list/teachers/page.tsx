@@ -57,8 +57,8 @@ const renderRow = (item: TeacherList) => (
             </div>
         </td>
         <td className='hidden md:table-cell'>{item.username}</td>
-        <td className='hidden md:table-cell'>{item.subjects.map(subject => subject.name).join(",")}</td>
-        <td className='hidden md:table-cell'>{item.classes.map(classItem => classItem.name).join(",")}</td>
+        <td className='hidden md:table-cell'>{item.subjects.map((subject) => subject.name).join(",")}</td>
+        <td className='hidden md:table-cell'>{item.classes.map((classItem) => classItem.name).join(",")}</td>
         <td className='hidden md:table-cell'>{item.phone}</td>
         <td className='hidden md:table-cell'>{item.address}</td>
         <td>
