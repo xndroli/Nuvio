@@ -85,6 +85,8 @@ const ExamListPage = async ({ searchParams }: { searchParams: { [key: string]: s
                             },
                         };
                         break;
+                    default:
+                        break;
                 }
             }
         }

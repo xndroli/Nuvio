@@ -85,6 +85,8 @@ const AssignmentListPage = async ({ searchParams }: { searchParams: { [key: stri
                             },
                         };
                         break;
+                    default:
+                        break;
                 }
             }
         }
