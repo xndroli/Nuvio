@@ -1,6 +1,6 @@
 // TEMP DATA
 
-export let role = "student";
+// export let role = "student";
 
 export const teachersData = [
     {
