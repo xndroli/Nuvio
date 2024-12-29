@@ -2,9 +2,9 @@ import FormModal from "@/components/FormModal"
 import Pagination from "@/components/Pagination"
 import Table from "@/components/Table"
 import TableSearch from "@/components/TableSearch"
-import { role, subjectsData } from "@/lib/data"
 import prisma from "@/lib/prisma"
 import { ITEM_PER_PAGE } from "@/lib/settings"
+import { role } from "@/lib/utils"
 import { Prisma, Subject, Teacher } from "@prisma/client"
 import Image from "next/image"
 
@@ -20,10 +20,10 @@ const columns = [
         accessor: "teachers", 
         className: "hidden md:table-cell",
     },
-    {
+    ...(role === "admin" ? [{
         header: "Actions", 
         accessor: "actions", 
-    },
+    }] : []),
 ];
 
 const renderRow = (item: SubjectList) => (

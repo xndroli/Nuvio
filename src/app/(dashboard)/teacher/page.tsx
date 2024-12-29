@@ -17,6 +17,6 @@ const TeacherPage = () => {
             </div>
         </div>
     )
-}
+};
 
-export default TeacherPage
+export default TeacherPage;
