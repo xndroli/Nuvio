@@ -31,7 +31,7 @@ const TeacherForm = ({ type, data }: { type: "create" | "update"; data?: any; })
         resolver: zodResolver(schema),
     });
 
-    const onSubmit = handleSubmit((data) => console.log(data));
+    const onSubmit = handleSubmit((data) => { console.log(data) });
 
     return (
         <form className='flex flex-col gap-8' onSubmit={onSubmit}>

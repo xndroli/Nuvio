@@ -6,15 +6,20 @@ import { useState } from "react";
 // import TeacherForm from "./forms/TeacherForm";
 // import StudentForm from "./forms/StudentForm";
 
+// Lazy Loading
+
 const TeacherForm = dynamic(() => import("./forms/TeacherForm"), {
     loading: () => <h1>Loading...</h1>,
 });
 const StudentForm = dynamic(() => import("./forms/StudentForm"), {
     loading: () => <h1>Loading...</h1>,
 });
+const SubjectForm = dynamic(() => import("./forms/SubjectForm"), {
+    loading: () => <h1>Loading...</h1>,
+});
+
 const ParentForm = dynamic(() => import("./forms/ParentForm"));
 const ClassForm = dynamic(() => import("./forms/ClassForm"));
-const SubjectForm = dynamic(() => import("./forms/SubjectForm"));
 const LessonForm = dynamic(() => import("./forms/LessonForm"));
 const ExamForm = dynamic(() => import("./forms/ExamForm"));
 const AssignmentForm = dynamic(() => import("./forms/AssignmentForm"));
@@ -26,11 +31,11 @@ const AnnouncementForm = dynamic(() => import("./forms/AnnouncementForm"));
 const forms: { 
     [key: string]: (type: "create" | "update", data?: any) => React.ReactElement;
 } = {
+    subject: (type, data) => <SubjectForm type={type} data={data} />,
     teacher: (type, data) => <TeacherForm type={type} data={data} />,
     student: (type, data) => <StudentForm type={type} data={data} />,
     parent: (type, data) => <ParentForm type={type} data={data} />,
     class: (type, data) => <ClassForm type={type} data={data} />,
-    subject: (type, data) => <SubjectForm type={type} data={data} />,
     lesson: (type, data) => <LessonForm type={type} data={data} />,
     exam: (type, data) => <ExamForm type={type} data={data} />,
     assignment: (type, data) => <AssignmentForm type={type} data={data} />,
@@ -51,7 +56,7 @@ const FormModal = ({ table, type, data, id }:{
 
     const [open, setOpen] = useState(false);
 
-
+    // Form to handle delete operation
     const Form = () => {
         return type === "delete" && id ? (
             <form action='' className='p-4 flex flex-col gap-4'>
@@ -60,7 +65,7 @@ const FormModal = ({ table, type, data, id }:{
             </form>
         ) : type === "create" || type === "update" ? (
             forms[table](type, data)
-        ) : "Form not found!";
+        ) : ("Form not found!");
     };
     
     return (
