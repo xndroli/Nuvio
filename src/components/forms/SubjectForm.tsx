@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InputField from "../InputField";
 import { subjectFormSchema, SubjectFormSchema } from "@/lib/formValidationSchema";
+import { createSubject } from "@/lib/actions";
 
 const SubjectForm = ({ type, data }: { type: "create" | "update"; data?: any; }) => {
     const { 
@@ -14,7 +15,7 @@ const SubjectForm = ({ type, data }: { type: "create" | "update"; data?: any; })
         resolver: zodResolver(subjectFormSchema),
     });
 
-    const onSubmit = handleSubmit((data) => console.log(data));
+    const onSubmit = handleSubmit((data) => {console.log(data); createSubject(data); });
 
     return (
         <form className='flex flex-col gap-8' onSubmit={onSubmit}>
