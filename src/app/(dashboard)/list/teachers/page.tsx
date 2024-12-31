@@ -1,4 +1,4 @@
-import FormModal from "@/components/FormModal"
+import FormContainer from "@/components/FormContainer"
 import Pagination from "@/components/Pagination"
 import Table from "@/components/Table"
 import TableSearch from "@/components/TableSearch"
@@ -69,7 +69,7 @@ const renderRow = (item: TeacherList) => (
                     </button>
                 </Link>
                     {role === 'admin' && (
-                        <FormModal table='teacher' type='delete' id={item.id} />
+                        <FormContainer table='teacher' type='delete' id={item.id} />
                     )}
             </div>
         </td>
@@ -133,7 +133,7 @@ const TeacherListPage = async ({ searchParams }: { searchParams: { [key: string]
                             <Image src='/sort.png' alt='sort' width={14} height={14} />
                         </button>
                         {role === 'admin' && (
-                            <FormModal table='teacher' type='create' />
+                            <FormContainer table='teacher' type='create' />
                         )}
                     </div>
                 </div>
