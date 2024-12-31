@@ -1,5 +1,4 @@
 import Announcements from "@/components/Announcements";
-import BigCalendar from "@/components/BigCalendar";
 import FormContainer from "@/components/FormContainer";
 import Performance from "@/components/Performance";
 import { role } from "@/lib/utils";
@@ -8,6 +7,7 @@ import { Teacher } from "@prisma/client";
 import Image from "next/image"
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import BigCalendarContainer from "@/components/BigCalendarContainer";
 
 const SingleTeacherPage = async ({ params: { id } }: { params: { id: string }}) => {
     const teacher: (Teacher & { _count: { subjects: number; lessons: number; classes: number; } }) | null = await prisma.teacher.findUnique({ 
@@ -109,7 +109,7 @@ const SingleTeacherPage = async ({ params: { id } }: { params: { id: string }}) 
                 {/* Bottom */}
                 <div className='mt-4 bg-white rounded-md p-4 h-[800px]'>
                     <h1 className=''>Teacher&apos;s Schedule</h1>
-                    <BigCalendar />
+                    <BigCalendarContainer type="teacherId" id={teacher.id} />
                 </div>
             </div>
             {/* Right Side */}
