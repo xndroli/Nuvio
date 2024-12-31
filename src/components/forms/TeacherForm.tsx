@@ -4,11 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import InputField from "../InputField";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useActionState, useEffect } from "react";
+import { Dispatch, SetStateAction, useActionState, useEffect, useState } from "react";
 import { teacherFormSchema, TeacherFormSchema } from "@/lib/formValidationSchema";
 import { createTeacher, updateTeacher } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { CldUploadWidget } from "next-cloudinary";
 
 const TeacherForm = ({ type, data, setOpen, relatedData }: { type: "create" | "update"; data?: any; setOpen: Dispatch<SetStateAction<boolean>>; relatedData?: any}) => {
     const { 
@@ -19,9 +20,12 @@ const TeacherForm = ({ type, data, setOpen, relatedData }: { type: "create" | "u
         resolver: zodResolver(teacherFormSchema),
     });
 
+    // Store image URL in state
+    const [imageUrl, setImageUrl] = useState<any>();
+
     const [state, formAction] = useActionState(type === "create" ? createTeacher : updateTeacher, { success: false, error: false });
     
-    const onSubmit = handleSubmit((data) => {console.log(data); formAction(data); });
+    const onSubmit = handleSubmit((data) => {console.log(data); formAction({...data, image: imageUrl?.secure_url }); });
 
     const router = useRouter();
 
@@ -105,15 +109,26 @@ const TeacherForm = ({ type, data, setOpen, relatedData }: { type: "create" | "u
                     label="Birthday" 
                     name='birthday' 
                     type='date'
-                    defaultValue={data?.birthday} 
+                    defaultValue={data?.birthday.toISOString().split("T")[0]} 
                     register={register} 
                     error={errors?.birthday} 
                 />
+                {data && (
+                    <InputField 
+                        label="Id" 
+                        name='id' 
+                        type='id'
+                        defaultValue={data?.id} 
+                        register={register} 
+                        error={errors?.id}
+                        hidden
+                    />
+                )}
                 <div className='flex flex-col gap-2 w-full md:w-1/4'>
                     <label className='text-xs text-gray-500'>Sex</label>
                     <select className='ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full' {...register("sex")} defaultValue={data?.sex}>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
                     </select>
                     {errors.sex?.message && (
                         <p className='text-xs text-red-400'>{errors.sex.message.toString()}</p>
@@ -132,8 +147,24 @@ const TeacherForm = ({ type, data, setOpen, relatedData }: { type: "create" | "u
                         <p className='text-xs text-red-400'>{errors.subjects.message.toString()}</p>
                     )}
                 </div>
-                
+                <CldUploadWidget uploadPreset="school" onSuccess={(result, { widget }) => {
+                    setImageUrl(result.info)
+                    widget.close() 
+                    // TODO: show image with image tag
+                }}> 
+                    {({ open }) => {
+                        return (
+                            <div className='text-xs text-gray-500 flex items-center gap-2 cursor-pointer' onClick={() => open()}>
+                                <Image src='/upload.png' alt='upload' width={28} height={28} />
+                                <span>Upload a photo</span>
+                            </div>
+                        );
+                    }}
+                </CldUploadWidget>
             </div>
+            {state.error && (
+                <span className='text-red-500'>Something went wrong!</span>
+            )}
             <button className='bg-blue-400 text-white p-2 rounded-md'>{type === "create" ? "Create" : "Update"}</button>
         </form>
     )

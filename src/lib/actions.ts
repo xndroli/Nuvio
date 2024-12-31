@@ -1,5 +1,6 @@
 'use server';
 
+import { clerkClient } from "@clerk/nextjs/server";
 //import { revalidatePath } from "next/cache";
 import { ClassFormSchema, SubjectFormSchema, TeacherFormSchema } from "./formValidationSchema";
 import prisma from "./prisma";
@@ -118,8 +119,33 @@ export const deleteClass = async (currentState: CurrentState, data: FormData) =>
 
 export const createTeacher = async (currentState: CurrentState, data: TeacherFormSchema) => {
     try {
+        const user = await clerkClient.users.createUser({
+            username: data.username,
+            password: data.password,
+            firstName: data.name,
+            lastName: data.surname,
+            publicMetadata: { role: "teacher" },
+        });
+
         await prisma.teacher.create({ 
-            data,
+            data: {
+                id: user.id,
+                username: data.username,
+                name: data.name,
+                surname: data.surname,
+                email: data.email,
+                phone: data.phone,
+                address: data.address,
+                image: data.image,
+                bloodType: data.bloodType,
+                birthday: data.birthday,
+                sex: data.sex,
+                subjects: {
+                    connect: data.subjects?.map((subjectId: string) => ({ 
+                        id: parseInt(subjectId),
+                    })),
+                },
+            }
         });
 
         // revalidatePath("/list/teachers");
@@ -131,12 +157,41 @@ export const createTeacher = async (currentState: CurrentState, data: TeacherFor
 };
 
 export const updateTeacher = async (currentState: CurrentState, data: TeacherFormSchema) => {
+    if (!data.id) {
+        return { success: false, error: true };
+    };
+    
     try {
-        await prisma.teacher.update({
+        const user = await clerkClient.users.updateUser(data.id, {
+            username: data.username,
+            ...(data.password !== "" && { password: data.password }),
+            firstName: data.name,
+            lastName: data.surname,
+            publicMetadata: { role: "teacher" },
+        });
+
+        await prisma.teacher.update({ 
             where: {
-                id: data.id, // Use the id from the form data
+                id: data.id,
             },
-            data,
+            data: {
+                ...(data.password !== "" && { password: data.password }),
+                username: data.username,
+                name: data.name,
+                surname: data.surname,
+                email: data.email,
+                phone: data.phone,
+                address: data.address,
+                image: data.image,
+                bloodType: data.bloodType,
+                birthday: data.birthday,
+                sex: data.sex,
+                subjects: {
+                    set: data.subjects?.map((subjectId: string) => ({ 
+                        id: parseInt(subjectId),
+                    })),
+                },
+            }
         });
 
         // revalidatePath("/list/teachers");
@@ -153,7 +208,7 @@ export const deleteTeacher = async (currentState: CurrentState, data: FormData) 
     try {
         await prisma.teacher.delete({
             where: {
-                id: parseInt(id),
+                id: id,
             },
         });
 
