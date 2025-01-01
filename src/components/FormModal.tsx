@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteClass, deleteSubject, deleteTeacher } from "@/lib/actions";
+import { deleteClass, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,7 @@ const deleteActionMap = {
     subject: deleteSubject,
     class: deleteClass,
     teacher: deleteTeacher,
-    student: deleteSubject,
+    student: deleteStudent,
     parent: deleteSubject,
     lesson: deleteSubject,
     exam: deleteSubject,
@@ -97,7 +97,7 @@ const FormModal = ({
         
         useEffect(() => {
             if (state.success) {
-                toast(`Subject has been deleted successfully!`);
+                toast(`${table} has been deleted successfully!`);
                 setOpen(false);
                 router.refresh();
             }

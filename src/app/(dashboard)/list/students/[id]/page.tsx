@@ -1,8 +1,10 @@
 import Announcements from "@/components/Announcements";
 import BigCalendarContainer from "@/components/BigCalendarContainer";
+import FormContainer from "@/components/FormContainer";
 import Performance from "@/components/Performance";
 import StudentAttendanceCard from "@/components/StudentAttendanceCard";
 import prisma from "@/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
 import { Class, Student } from "@prisma/client";
 import Image from "next/image"
 import Link from "next/link";
@@ -10,6 +12,9 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 const SingleStudentPage = async ({ params: { id } }: { params: { id: string }}) => {
+    const { sessionClaims } = await auth();
+    const role = (sessionClaims?.metadata as { role?: string })?.role;
+
     const student: (Student & { class: (Class & { _count: { lessons: number } }) }) | null = await prisma.student.findUnique({ 
         where: { id }, 
         include: { 
@@ -33,7 +38,16 @@ const SingleStudentPage = async ({ params: { id } }: { params: { id: string }}) 
                             <Image src={student.image || '/noAvatar.png'} alt='' width={144} height={144} className='w-36 h-36 rounded-full object-cover' />
                         </div>
                         <div className='w-2/3 flex flex-col justify-between gap-4'>
-                            <h1 className='text-xl font-semibold'>{student.name + " " + student.surname}</h1>
+                            <div className='flex items-center gap-4'>
+                                <h1 className='text-xl font-semibold'>{student.name + " " + student.surname}</h1>
+                                {role === "admin" &&(
+                                        <FormContainer 
+                                            table='student' 
+                                            type='update' 
+                                            data={student} 
+                                        />
+                                    )}
+                            </div>
                             <p className='text-sm text-gray-500'>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                             <div className='flex items-center justify-between gap-2 flex-wrap text-xs font-medium'>
                                 <div className='w-full md:w-1/3 lg:w-full 2xl:w-1/3 flex items-center gap-2'>

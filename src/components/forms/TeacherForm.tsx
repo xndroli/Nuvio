@@ -41,7 +41,7 @@ const TeacherForm = ({ type, data, setOpen, relatedData }: { type: "create" | "u
 
     return (
         <form className='flex flex-col gap-8' onSubmit={onSubmit}>
-            <h1 className='text-xl font-semibold'>{type === "create" ? "Create Teacher" : "Update Teacher"}</h1>
+            <h1 className='text-xl font-semibold'>{type === "create" ? "Create teacher" : "Update teacher"}</h1>
             <span className='text-xs text-gray-400 font-medium'>Authentication Information</span>
             <div className='flex justify-between flex-wrap gap-4'>
                 <InputField 
