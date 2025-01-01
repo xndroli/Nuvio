@@ -1,13 +1,13 @@
-import FormModal from "@/components/FormModal"
-import Pagination from "@/components/Pagination"
-import Table from "@/components/Table"
-import TableSearch from "@/components/TableSearch"
-import prisma from "@/lib/prisma"
-import { ITEM_PER_PAGE } from "@/lib/settings"
-import { role } from "@/lib/utils"
-import { Class, Prisma, Student } from "@prisma/client"
-import Image from "next/image"
-import Link from "next/link"
+import FormContainer from "@/components/FormContainer";
+import Pagination from "@/components/Pagination";
+import Table from "@/components/Table";
+import TableSearch from "@/components/TableSearch";
+import prisma from "@/lib/prisma";
+import { ITEM_PER_PAGE } from "@/lib/settings";
+import { role } from "@/lib/utils";
+import { Class, Prisma, Student } from "@prisma/client";
+import Image from "next/image";
+import Link from "next/link";
 
 type StudentList = Student & { class: Class };
 
@@ -66,7 +66,7 @@ const renderRow = (item: StudentList) => (
                         // <button className='w-7 h-7 flex items-center justify-center rounded-full bg-flowerPurple'>
                         //     <Image src='/delete.png' alt='' width={16} height={16} />
                         // </button>
-                        <FormModal table='student' type='delete' id={item.id} />
+                        <FormContainer table='student' type='delete' id={item.id} />
                     )}
             </div>
         </td>
@@ -134,7 +134,7 @@ const StudentListPage = async ({ searchParams }: { searchParams: { [key: string]
                             // <button className='w-8 h-8 flex items-center justify-center rounded-full bg-sunYellow'>
                             //     <Image src='/plus.png' alt='add' width={14} height={14} />
                             // </button>
-                            <FormModal table='student' type='create' />
+                            <FormContainer table='student' type='create' />
                         )}
                     </div>
                 </div>
