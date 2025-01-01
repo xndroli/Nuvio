@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteClass, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
+import { deleteClass, deleteExam, deleteStudent, deleteSubject, deleteTeacher } from "@/lib/actions";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -13,9 +13,9 @@ const deleteActionMap = {
     class: deleteClass,
     teacher: deleteTeacher,
     student: deleteStudent,
+    exam: deleteExam,
     parent: deleteSubject,
     lesson: deleteSubject,
-    exam: deleteSubject,
     assignment: deleteSubject,
     result: deleteSubject,
     attendance: deleteSubject,
@@ -37,10 +37,12 @@ const SubjectForm = dynamic(() => import("./forms/SubjectForm"), {
 const ClassForm = dynamic(() => import("./forms/ClassForm"), {
     loading: () => <h1>Loading...</h1>,
 });
+const ExamForm = dynamic(() => import("./forms/ExamForm"), {
+    loading: () => <h1>Loading...</h1>,
+});
 
 // const ParentForm = dynamic(() => import("./forms/ParentForm"));
 // const LessonForm = dynamic(() => import("./forms/LessonForm"));
-// const ExamForm = dynamic(() => import("./forms/ExamForm"));
 // const AssignmentForm = dynamic(() => import("./forms/AssignmentForm"));
 // const ResultForm = dynamic(() => import("./forms/ResultForm"));
 // const AttendanceForm = dynamic(() => import("./forms/AttendanceForm"));
@@ -67,9 +69,12 @@ const forms: {
     student: (setOpen, type, data, relatedData) => (
         <StudentForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
     ),
+    exam: (setOpen, type, data, relatedData) => (
+        <ExamForm type={type} data={data} setOpen={setOpen} relatedData={relatedData} />
+    ),
+
     // parent: (setOpen, type, data) => <ParentForm type={type} data={data} setOpen={setOpen} />,
     // lesson: (setOpen, type, data) => <LessonForm type={type} data={data} setOpen={setOpen} />,
-    // exam: (setOpen, type, data) => <ExamForm type={type} data={data} setOpen={setOpen} />,
     // assignment: (setOpen, type, data) => <AssignmentForm type={type} data={data} setOpen={setOpen} />,
     // result: (setOpen, type, data) => <ResultForm type={type} data={data} setOpen={setOpen} />,
     // attendance: (setOpen, type, data) => <AttendanceForm type={type} data={data} setOpen={setOpen} />,
