@@ -5,7 +5,7 @@ import EventCalendarContainer from "@/components/EventCalendarContainer"
 import FinanceChart from "@/components/FinanceChart"
 import UserCard from "@/components/UserCard"
 
-const AdminPage = async ({ searchParams }: { searchParams: { [key: string]: string | undefined } }) => {
+const AdminPage = ({ searchParams }: { searchParams: { [key: string]: string | undefined } }) => {
     return (
         <div className='p-4 flex gap-4 flex-col md:flex-row'>
             {/* Left Side */}
