@@ -10,7 +10,9 @@ import Image from "next/image"
 
 type AnnouncementList = Announcement & { class: Class };
 
-const AnnouncementListPage = async ({ searchParams }: { searchParams: { [key: string]: string | undefined }}) => {
+const AnnouncementListPage = async (props: { searchParams: Promise<{ [key: string]: string | undefined }> }) => {
+    // { searchParams }: { searchParams: { [key: string]: string | undefined }}
+    const searchParams = await props.searchParams;
 
     const { userId, sessionClaims } = await auth();
     const role = (sessionClaims?.metadata as { role?: string })?.role;

@@ -10,7 +10,10 @@ import Image from "next/image"
 
 type LessonList = Lesson & { subject: Subject } & { class: Class } & { teacher: Teacher };
 
-const LessonListPage = async ({ searchParams }: { searchParams: { [key: string]: string | undefined }}) => {
+const LessonListPage = async (props: { searchParams: Promise<{ [key: string]: string | undefined }> }) => {
+    // { searchParams }: { searchParams: { [key: string]: string | undefined }}
+    const searchParams = await props.searchParams;
+    
     const { sessionClaims } = await auth();
     const role = (sessionClaims?.metadata as { role?: string })?.role;
 

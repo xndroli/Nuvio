@@ -11,7 +11,10 @@ import Link from "next/link"
 
 type TeacherList = Teacher & { subjects: Subject[] } & { classes: Class[] };
 
-const TeacherListPage = async ({ searchParams }: { searchParams: { [key: string]: string | undefined }}) => {
+const TeacherListPage = async (props: { searchParams: Promise<{ [key: string]: string | undefined }> }) => {
+    // { searchParams }: { searchParams: { [key: string]: string | undefined }}
+    const searchParams = await props.searchParams;
+    
     const { sessionClaims } = await auth();
     const role = (sessionClaims?.metadata as { role?: string })?.role;
 
