@@ -40,7 +40,7 @@ const ExamForm = ({
             setOpen(false);
             router.refresh();
         }
-    });
+    }, [state, router, type, setOpen]);
 
     const { lessons } = relatedData;
 

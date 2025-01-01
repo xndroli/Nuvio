@@ -35,7 +35,7 @@ const StudentForm = ({ type, data, setOpen, relatedData }: { type: "create" | "u
             setOpen(false);
             router.refresh();
         }
-    });
+    }, [state, router, type, setOpen]);
 
     const { grades, classes } = relatedData;
 
