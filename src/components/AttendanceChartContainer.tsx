@@ -34,6 +34,7 @@ const AttendanceChartContainer = async() => {
 
     responseData.forEach((item) =>{
         const itemDate = new Date(item.date);
+        const dayOfWeek = itemDate.getDay();
 
         if (dayOfWeek >= 1 && dayOfWeek <= 5) {
             const dayName = daysOfWeek[dayOfWeek - 1];

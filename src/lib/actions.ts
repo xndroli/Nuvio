@@ -1,6 +1,6 @@
 'use server';
 
-//import { revalidatePath } from "next/cache";
+// import { revalidatePath } from "next/cache";
 import { ClassFormSchema, ExamFormSchema, StudentFormSchema, SubjectFormSchema, TeacherFormSchema } from "./formValidationSchema";
 import prisma from "./prisma";
 import { auth, clerkClient } from "@clerk/nextjs/server";
@@ -172,7 +172,7 @@ export const updateTeacher = async (currentState: CurrentState, data: TeacherFor
 
         await prisma.teacher.update({ 
             where: {
-                id: data.id,
+                id: user.id,
             },
             data: {
                 ...(data.password !== "" && { password: data.password }),
@@ -288,7 +288,7 @@ export const updateStudent = async (currentState: CurrentState, data: StudentFor
 
         await prisma.student.update({ 
             where: {
-                id: data.id,
+                id: user.id,
             },
             data: {
                 ...(data.password !== "" && { password: data.password }),
