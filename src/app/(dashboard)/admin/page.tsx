@@ -5,7 +5,9 @@ import EventCalendarContainer from "@/components/EventCalendarContainer"
 import FinanceChart from "@/components/FinanceChart"
 import UserCard from "@/components/UserCard"
 
-const AdminPage = async ({ searchParams, }: { searchParams: { [keys: string]: string | undefined } }) => {
+const AdminPage = async ({ searchParams, }: { searchParams: Promise<{ [keys: string]: string | undefined }> }) => {
+    const params = await searchParams; // await the resolution of the promise
+
     return (
         <div className='p-4 flex gap-4 flex-col md:flex-row'>
             {/* Left Side */}
@@ -35,7 +37,7 @@ const AdminPage = async ({ searchParams, }: { searchParams: { [keys: string]: st
             </div>
             {/* Right Side */}
             <div className='w-full lg:w-1/3 flex-col gap-8'>
-                <EventCalendarContainer searchParams={searchParams} />
+                <EventCalendarContainer searchParams={params} />
                 <Announcements />
             </div>
         </div>
