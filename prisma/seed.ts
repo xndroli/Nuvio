@@ -33,6 +33,9 @@ async function main() {
             gradeId: i, 
             capacity: Math.floor(Math.random() * (20 - 15 + 1)) + 15,
         },
+        include: {
+            grade: true,
+        },
         });
     }
 
