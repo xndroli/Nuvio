@@ -119,7 +119,8 @@ export const deleteClass = async (currentState: CurrentState, data: FormData) =>
 
 export const createTeacher = async (currentState: CurrentState, data: TeacherFormSchema) => {
     try {
-        const user = await clerkClient.users.createUser({
+        const clerk = await clerkClient();
+        const user = await clerk.users.createUser({
             username: data.username,
             password: data.password,
             firstName: data.name,
